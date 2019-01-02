@@ -14,4 +14,4 @@ this will ensure that you are developing in the right python environment
 `cd fe && npm i` to install the dependencies
 `scripts/run_yoga_frontend.sh` this will start the front end dev server
 
-### Both dev servers are hot reloading, meaning you only need to run these whe n you start developing and they will update as you save new changes
+### Both dev servers are hot reloading, meaning you only need to run these when you start developing and they will update as you save new changes
