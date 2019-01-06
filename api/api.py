@@ -6,16 +6,18 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app)
 
-
-class Positions(Resource):
-    def get(self):
-        return {
-            'positions': [
+positions = [
                 'chivozna',
                 'downward doggy',
                 'sip tea',
                 'sip more tea',
             ]
+
+
+class Positions(Resource):
+    def get(self):
+        return {
+            'positions': positions
         }
 
 

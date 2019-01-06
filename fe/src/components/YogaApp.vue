@@ -1,29 +1,30 @@
 <template>
   <div>
-    <ul>
-      <li
-        v-for="(pos,i) in positions"
-        :key="i">
-        {{pos}}  
-      </li>
-    </ul>
+    <AddPosition :addPosition="addPosition" />
+    <List :positions="positions" :deletePosition="deletePosition"/>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import List from './List';
+import AddPosition from './AddPosition';
 export default {
   name: 'YogaApp',
+  components: {
+      List,
+      AddPosition,
+  },
   data () {
     return {
       positions: [],
     }
   },
   mounted() {
-    this.loadPositions();
+    this.getPositions();
   },
   methods: {
-    async loadPositions() {
+    async getPositions() {
       try {
         const response = await axios.get('http://localhost:3000/');
         this.positions = response.data.positions;
@@ -31,25 +32,23 @@ export default {
       } catch (e) {
         console.error('Something went wrong');
       }
-    }
+    },
+    async addPosition(posName) {
+      try {
+        const response = await axios.post('http://localhost:3000/', {position_name: posName});
+        this.getPositions();
+      } catch (e) {
+        console.log('Could not add position');
+      }
+    },
+    async deletePosition(posName) {
+      try {
+        const response = await axios.delete('http://localhost:3000/', {position_name: posName});
+        this.getPositions();
+      } catch (e) {
+        console.log('Could not delete position');
+      }
+    },
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
